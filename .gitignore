@@ -7,6 +7,18 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node modules
+/node_modules/
+
+# Yarn cache
+/.yarn/
+
+# Build output
+/dist/
+
+# Other files to ignore
+*.log
+
 node_modules
 .DS_Store
 dist
@@ -28,3 +40,7 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# Vite config timestamp files
+vite.config.js.timestamp-*.mjs
+
