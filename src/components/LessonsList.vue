@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- Filter component for sorting -->
     <LessonFilter
       :sort-attribute="sortAttribute"
       :sort-order="sortOrder"
@@ -12,7 +11,7 @@
         v-for="lesson in sortedLessons"
         :key="lesson.id"
         class="lesson-item bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl">
-        <LessonCard :lesson="lesson" />
+        <LessonCard :lesson="lesson" @update-cart="updateCart" />
       </div>
     </div>
   </div>
@@ -145,25 +144,20 @@ export default {
       },
     ]);
 
-    const sortAttribute = ref("subject"); // Default sort attribute
-    const sortOrder = ref("asc"); // Default sort order (ascending)
+    const sortAttribute = ref("subject");
+    const sortOrder = ref("asc");
 
     const sortedLessons = computed(() => {
-      // Create a shallow copy of lessons to avoid mutating the original array
       const sorted = [...lessons.value];
-
-      // Sorting logic based on attribute and order
       sorted.sort((a, b) => {
         const attrA = a[sortAttribute.value];
         const attrB = b[sortAttribute.value];
 
         if (typeof attrA === "string") {
-          // String comparison (case-insensitive)
           return sortOrder.value === "asc"
             ? attrA.localeCompare(attrB)
             : attrB.localeCompare(attrA);
         } else if (typeof attrA === "number") {
-          // Numeric comparison
           return sortOrder.value === "asc" ? attrA - attrB : attrB - attrA;
         }
         return 0;
@@ -177,12 +171,17 @@ export default {
       sortOrder.value = order;
     };
 
+    const updateCart = (cart) => {
+      console.log("Cart updated:", cart); // Placeholder for handling cart updates
+    };
+
     return {
       lessons,
       sortedLessons,
       sortAttribute,
       sortOrder,
       updateSort,
+      updateCart,
     };
   },
 };

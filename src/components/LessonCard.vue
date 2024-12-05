@@ -39,12 +39,11 @@
 export default {
   name: "LessonCard",
   props: {
-    lesson: Object, // Lesson data passed from LessonsList
+    lesson: Object,
   },
   computed: {
     formattedPrice() {
-      // Ensure lesson.price is properly formatted as currency
-      const price = parseFloat(this.lesson.price.replace(/[^0-9.-]+/g, "")); // Extract numeric value if prefixed with symbols
+      const price = parseFloat(this.lesson.price.replace(/[^0-9.-]+/g, ""));
       return new Intl.NumberFormat("en-GB", {
         style: "currency",
         currency: "GBP",
@@ -54,8 +53,18 @@ export default {
   methods: {
     addToCart() {
       if (this.lesson.spaces > 0) {
-        this.lesson.spaces--; // Decrease space count when added to cart
-        // Additional logic to store the lesson in a cart (e.g., Vuex or localStorage)
+        this.lesson.spaces--; // Decrease space count
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const existingLesson = cart.find((item) => item.id === this.lesson.id);
+
+        if (existingLesson) {
+          existingLesson.quantity++;
+        } else {
+          cart.push({ ...this.lesson, quantity: 1 });
+        }
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+        this.$emit("update-cart", cart);
       }
     },
   },
