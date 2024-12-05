@@ -1,23 +1,33 @@
 <template>
-  <div
-    class="lesson-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-4">
+  <div>
+    <!-- Filter component for sorting -->
+    <LessonFilter
+      :sort-attribute="sortAttribute"
+      :sort-order="sortOrder"
+      @update-sort="updateSort" />
+
     <div
-      v-for="lesson in lessons"
-      :key="lesson.id"
-      class="lesson-item bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl">
-      <LessonCard :lesson="lesson" />
+      class="lesson-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 p-4">
+      <div
+        v-for="lesson in sortedLessons"
+        :key="lesson.id"
+        class="lesson-item bg-white rounded-lg shadow-lg overflow-hidden transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-xl">
+        <LessonCard :lesson="lesson" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import LessonCard from "./LessonCard.vue";
+import LessonFilter from "./LessonFilter.vue";
 
 export default {
   name: "LessonsList",
   components: {
     LessonCard,
+    LessonFilter,
   },
   setup() {
     const lessons = ref([
@@ -135,11 +145,45 @@ export default {
       },
     ]);
 
-    return { lessons };
+    const sortAttribute = ref("subject"); // Default sort attribute
+    const sortOrder = ref("asc"); // Default sort order (ascending)
+
+    const sortedLessons = computed(() => {
+      // Create a shallow copy of lessons to avoid mutating the original array
+      const sorted = [...lessons.value];
+
+      // Sorting logic based on attribute and order
+      sorted.sort((a, b) => {
+        const attrA = a[sortAttribute.value];
+        const attrB = b[sortAttribute.value];
+
+        if (typeof attrA === "string") {
+          // String comparison (case-insensitive)
+          return sortOrder.value === "asc"
+            ? attrA.localeCompare(attrB)
+            : attrB.localeCompare(attrA);
+        } else if (typeof attrA === "number") {
+          // Numeric comparison
+          return sortOrder.value === "asc" ? attrA - attrB : attrB - attrA;
+        }
+        return 0;
+      });
+
+      return sorted;
+    });
+
+    const updateSort = (attribute, order) => {
+      sortAttribute.value = attribute;
+      sortOrder.value = order;
+    };
+
+    return {
+      lessons,
+      sortedLessons,
+      sortAttribute,
+      sortOrder,
+      updateSort,
+    };
   },
 };
 </script>
-
-<style scoped>
-/* Remove unnecessary scoped styles to rely on Tailwind CSS */
-</style>
