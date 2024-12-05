@@ -18,5 +18,5 @@ export default defineConfig({
       plugins: [tailwindcss(), autoprefixer()],
     },
   },
-  base: "/3144_LessonApplication_Frontend/",
+  base: "/",
 });
