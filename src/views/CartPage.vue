@@ -18,7 +18,7 @@
       <div class="mt-4">
         <p class="font-semibold">Total: ${{ total }}</p>
         <router-link
-          to="/checkout"
+          to="/"
           class="block mt-4 py-2 px-4 bg-green-500 text-white rounded-lg text-center">
           Proceed to Checkout
         </router-link>
@@ -36,16 +36,31 @@ export default {
   },
   computed: {
     total() {
-      return this.cart.reduce((sum, lesson) => sum + lesson.price, 0);
+      return this.cart.reduce(
+        (sum, lesson) => sum + parseFloat(lesson.price),
+        0
+      );
     },
   },
   methods: {
     removeFromCart(index) {
-      this.cart.splice(index, 1);
+      const lesson = this.cart[index];
+      if (lesson.quantity > 1) {
+        lesson.quantity--; // Decrease quantity if more than 1
+      } else {
+        this.cart.splice(index, 1); // Remove item from cart
+      }
+      // Update the lessons in localStorage
+      const lessons = JSON.parse(localStorage.getItem("lessons")) || [];
+      const lessonIndex = lessons.findIndex((l) => l.id === lesson.id);
+      if (lessonIndex !== -1) {
+        lessons[lessonIndex].spaces++; // Increment spaces
+      }
+      localStorage.setItem("lessons", JSON.stringify(lessons)); // Save lessons
+      localStorage.setItem("cart", JSON.stringify(this.cart)); // Save updated cart
     },
   },
   created() {
-    // Fetch cart data (could be from Vuex or localStorage)
     this.cart = JSON.parse(localStorage.getItem("cart")) || [];
   },
 };

@@ -1,20 +1,14 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Home from "../views/Home.vue";
+import Home from "../views/Home.vue"; // Adjust to your file structure
+import Cart from "../views/CartPage.vue"; // Your Cart component
 
 const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Home,
-  },
-  {
-    path: "/:catchAll(.*)",
-    redirect: "/",
-  },
+  { path: "/", component: Home },
+  { path: "/cart", component: Cart },
 ];
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHistory("/"),
   routes,
 });
 

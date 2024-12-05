@@ -34,7 +34,7 @@ const RAW_RUNTIME_STATE =
           ["tailwindcss", "npm:3.4.16"],\
           ["vite", "virtual:f11a824523c02cc914623412e07e1594f46f92d515991aee66132aa1f6844d4ca0faac888666655d138e13eb8ce82b438e0b0c2fb6bfafff8b4bccde1d2b470e#npm:5.4.11"],\
           ["vue", "virtual:f11a824523c02cc914623412e07e1594f46f92d515991aee66132aa1f6844d4ca0faac888666655d138e13eb8ce82b438e0b0c2fb6bfafff8b4bccde1d2b470e#npm:3.5.13"],\
-          ["vue-router", "virtual:f11a824523c02cc914623412e07e1594f46f92d515991aee66132aa1f6844d4ca0faac888666655d138e13eb8ce82b438e0b0c2fb6bfafff8b4bccde1d2b470e#npm:4.5.0"]\
+          ["vue-router", "virtual:f11a824523c02cc914623412e07e1594f46f92d515991aee66132aa1f6844d4ca0faac888666655d138e13eb8ce82b438e0b0c2fb6bfafff8b4bccde1d2b470e#npm:4.0.13"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -2082,7 +2082,7 @@ const RAW_RUNTIME_STATE =
           ["tailwindcss", "npm:3.4.16"],\
           ["vite", "virtual:f11a824523c02cc914623412e07e1594f46f92d515991aee66132aa1f6844d4ca0faac888666655d138e13eb8ce82b438e0b0c2fb6bfafff8b4bccde1d2b470e#npm:5.4.11"],\
           ["vue", "virtual:f11a824523c02cc914623412e07e1594f46f92d515991aee66132aa1f6844d4ca0faac888666655d138e13eb8ce82b438e0b0c2fb6bfafff8b4bccde1d2b470e#npm:3.5.13"],\
-          ["vue-router", "virtual:f11a824523c02cc914623412e07e1594f46f92d515991aee66132aa1f6844d4ca0faac888666655d138e13eb8ce82b438e0b0c2fb6bfafff8b4bccde1d2b470e#npm:4.5.0"]\
+          ["vue-router", "virtual:f11a824523c02cc914623412e07e1594f46f92d515991aee66132aa1f6844d4ca0faac888666655d138e13eb8ce82b438e0b0c2fb6bfafff8b4bccde1d2b470e#npm:4.0.13"]\
         ],\
         "linkType": "SOFT"\
       }]\
@@ -3131,17 +3131,17 @@ const RAW_RUNTIME_STATE =
       }]\
     ]],\
     ["vue-router", [\
-      ["npm:4.5.0", {\
-        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/vue-router-npm-4.5.0-eade46eba9-10c0.zip/node_modules/vue-router/",\
+      ["npm:4.0.13", {\
+        "packageLocation": "../../../AppData/Local/Yarn/Berry/cache/vue-router-npm-4.0.13-171d2603d9-10c0.zip/node_modules/vue-router/",\
         "packageDependencies": [\
-          ["vue-router", "npm:4.5.0"]\
+          ["vue-router", "npm:4.0.13"]\
         ],\
         "linkType": "SOFT"\
       }],\
-      ["virtual:f11a824523c02cc914623412e07e1594f46f92d515991aee66132aa1f6844d4ca0faac888666655d138e13eb8ce82b438e0b0c2fb6bfafff8b4bccde1d2b470e#npm:4.5.0", {\
-        "packageLocation": "./.yarn/__virtual__/vue-router-virtual-83b254bf3c/4/AppData/Local/Yarn/Berry/cache/vue-router-npm-4.5.0-eade46eba9-10c0.zip/node_modules/vue-router/",\
+      ["virtual:f11a824523c02cc914623412e07e1594f46f92d515991aee66132aa1f6844d4ca0faac888666655d138e13eb8ce82b438e0b0c2fb6bfafff8b4bccde1d2b470e#npm:4.0.13", {\
+        "packageLocation": "./.yarn/__virtual__/vue-router-virtual-9516d77258/4/AppData/Local/Yarn/Berry/cache/vue-router-npm-4.0.13-171d2603d9-10c0.zip/node_modules/vue-router/",\
         "packageDependencies": [\
-          ["vue-router", "virtual:f11a824523c02cc914623412e07e1594f46f92d515991aee66132aa1f6844d4ca0faac888666655d138e13eb8ce82b438e0b0c2fb6bfafff8b4bccde1d2b470e#npm:4.5.0"],\
+          ["vue-router", "virtual:f11a824523c02cc914623412e07e1594f46f92d515991aee66132aa1f6844d4ca0faac888666655d138e13eb8ce82b438e0b0c2fb6bfafff8b4bccde1d2b470e#npm:4.0.13"],\
           ["@types/vue", null],\
           ["@vue/devtools-api", "npm:6.6.4"],\
           ["vue", "virtual:f11a824523c02cc914623412e07e1594f46f92d515991aee66132aa1f6844d4ca0faac888666655d138e13eb8ce82b438e0b0c2fb6bfafff8b4bccde1d2b470e#npm:3.5.13"]\
