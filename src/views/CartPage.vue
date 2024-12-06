@@ -19,7 +19,7 @@
             class="lesson-image-container w-24 h-24 overflow-hidden mr-6 rounded-lg">
             <img
               v-if="lesson.image"
-              :src="lesson.image"
+              :src="getLessonImage(lesson.subject)"
               alt="Lesson image"
               class="w-full h-full object-cover" />
           </div>
@@ -105,9 +105,22 @@
 </template>
 
 <script>
-import { toast } from "vue3-toastify";
-import { submitOrder } from "../services/orderService";
-import "vue3-toastify/dist/index.css";
+import art from "../assets/art.jpg";
+import biology from "../assets/biology.jpg";
+import chemistry from "../assets/chemistry.jpg";
+import computer from "../assets/computer.jpg";
+import economics from "../assets/economics.jpg";
+import engineering from "../assets/engineering.jpg";
+import english from "../assets/english.jpg";
+import french from "../assets/french.jpg";
+import geography from "../assets/geography.jpg";
+import history from "../assets/history.jpg";
+import law from "../assets/law.jpg";
+import music from "../assets/music.jpg"; // Add missing images for all subjects
+import mathematics from "../assets/mathematics.jpg"; // Add missing images for all subjects
+import philosophy from "../assets/philosophy.jpg"; // Add missing images for all subjects
+import physics from "../assets/physics.jpg"; // Add missing images for all subjects
+import psychology from "../assets/psychology.jpg"; // Add missing images for all subjects
 
 export default {
   data() {
@@ -143,11 +156,6 @@ export default {
       } else {
         this.cart.splice(index, 1);
       }
-      toast(`${lesson.subject} removed from the cart`, {
-        type: "error",
-        autoClose: 2000,
-      });
-
       // Update localStorage
       localStorage.setItem("cart", JSON.stringify(this.cart));
     },
@@ -163,9 +171,9 @@ export default {
             quantity: lesson.quantity || 1,
           })),
         };
-
         try {
           // Call submitOrder from orderService.js to send the order data
+          // Assuming orderService.js exists and handles the API calls
           const response = await submitOrder(order);
           toast("Order submitted successfully!", {
             type: "success",
@@ -188,6 +196,44 @@ export default {
           type: "error",
           autoClose: 3000,
         });
+      }
+    },
+    getLessonImage(subject) {
+      switch (subject.toLowerCase()) {
+        case "art history":
+          return art;
+        case "biology":
+          return biology;
+        case "chemistry":
+          return chemistry;
+        case "computer science":
+          return computer;
+        case "economics":
+          return economics;
+        case "engineering":
+          return engineering;
+        case "english literature":
+          return english;
+        case "french":
+          return french;
+        case "geography":
+          return geography;
+        case "history":
+          return history;
+        case "law":
+          return law;
+        case "math":
+          return mathematics;
+        case "music theory":
+          return music;
+        case "philosophy":
+          return philosophy;
+        case "physics":
+          return physics;
+        case "psychology":
+          return psychology;
+        default:
+          return "";
       }
     },
   },

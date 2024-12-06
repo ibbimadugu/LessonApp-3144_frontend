@@ -2,11 +2,14 @@
   <div
     class="lesson-card border rounded-lg shadow-lg bg-white transition-transform transform hover:scale-105 hover:shadow-xl">
     <div class="lesson-image-container w-full h-48 overflow-hidden">
+      <!-- Display lesson image if available, otherwise fallback to default image -->
       <img
-        v-if="lesson.image"
-        :src="'http://localhost:5000/images/' + lesson.image"
+        v-if="lessonImage"
+        :src="lessonImage"
         alt="Lesson image"
         class="w-full h-full object-cover" />
+      <img v-else src="../assets/default-image.jpg" <!-- Fallback image -- />
+      alt="Default Lesson image" class="w-full h-full object-cover" />
     </div>
 
     <div class="p-4">
@@ -37,8 +40,23 @@
 </template>
 
 <script>
-import { toast } from "vue3-toastify";
-import "vue3-toastify/dist/index.css";
+import art from "../assets/art.jpg";
+import biology from "../assets/biology.jpg";
+import chemistry from "../assets/chemistry.jpg";
+import computer from "../assets/computer.jpg";
+import economics from "../assets/economics.jpg";
+import engineering from "../assets/engineering.jpg";
+import english from "../assets/english.jpg";
+import french from "../assets/french.jpg";
+import geography from "../assets/geography.jpg";
+import history from "../assets/history.jpg";
+import law from "../assets/law.jpg";
+import mathematics from "../assets/mathematics.jpg";
+import music from "../assets/music.jpg";
+import philosophy from "../assets/philosophy.jpg";
+import physics from "../assets/physics.jpg";
+import psychology from "../assets/psychology.jpg";
+import defaultImage from "../assets/defaultimg.png"; // Import the default image
 
 export default {
   name: "LessonCard",
@@ -49,6 +67,29 @@ export default {
     },
   },
   computed: {
+    // Dynamically return the correct image based on the lesson subject
+    lessonImage() {
+      const images = {
+        "art history": art,
+        biology,
+        chemistry,
+        "computer science": computer,
+        economics,
+        engineering,
+        "english literature": english,
+        french,
+        geography,
+        history,
+        law,
+        math: mathematics,
+        philosophy,
+        physics,
+        psychology,
+        "music theory": music,
+      };
+
+      return images[this.lesson.subject.toLowerCase()] || defaultImage;
+    },
     formattedPrice() {
       const price = parseFloat(this.lesson.price.replace(/[^0-9.-]+/g, ""));
       return new Intl.NumberFormat("en-GB", {
@@ -56,10 +97,6 @@ export default {
         currency: "GBP",
       }).format(price);
     },
-  },
-  mounted() {
-    // Log the lesson object when the component is mounted
-    console.log("Lesson data in LessonCard:", this.lesson);
   },
   methods: {
     addToCart() {
@@ -79,3 +116,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+/* Tailwind handles most of the styling, additional tweaks for smoother transition and visuals */
+.lesson-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.lesson-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+</style>
