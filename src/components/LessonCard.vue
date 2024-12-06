@@ -8,7 +8,7 @@
         :src="lessonImage"
         alt="Lesson image"
         class="w-full h-full object-cover" />
-      <img v-else src="../assets/default-image.jpg" <!-- Fallback image -- />
+      <img v-else src="../assets/defaultimg.png" <!-- Fallback image -- />
       alt="Default Lesson image" class="w-full h-full object-cover" />
     </div>
 
@@ -56,7 +56,7 @@ import music from "../assets/music.jpg";
 import philosophy from "../assets/philosophy.jpg";
 import physics from "../assets/physics.jpg";
 import psychology from "../assets/psychology.jpg";
-import defaultImage from "../assets/defaultimg.png"; // Import the default image
+import defaultImage from "../assets/defaultimg.png";
 
 export default {
   name: "LessonCard",
