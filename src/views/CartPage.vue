@@ -36,6 +36,7 @@
             </p>
           </div>
         </div>
+
         <!-- Remove Button -->
         <div class="flex items-center space-x-4">
           <button
@@ -46,26 +47,41 @@
         </div>
       </div>
 
-      <!-- Total, Back to Lessons, and Checkout -->
-      <div class="mt-6 flex justify-between items-center">
-        <div class="text-right">
-          <p class="font-semibold text-xl text-gray-800 mb-4">
-            Total: ${{ total }}
-          </p>
-          <router-link
-            to="/checkout"
-            class="py-2 px-6 bg-green-500 text-white rounded-lg text-lg font-semibold hover:bg-green-600 transition-colors duration-300">
-            Proceed to Checkout
-          </router-link>
+      <!-- Total and Checkout Form -->
+      <div class="mt-6">
+        <p class="font-semibold text-xl text-gray-800 mb-4">
+          Total: ${{ total }}
+        </p>
+
+        <!-- Checkout Form -->
+        <div class="checkout-form space-y-4">
+          <input
+            v-model="name"
+            type="text"
+            placeholder="Enter your name"
+            class="w-full p-3 border rounded-lg"
+            :class="{ 'border-red-500': !isNameValid && name !== '' }" />
+          <input
+            v-model="phone"
+            type="text"
+            placeholder="Enter your phone"
+            class="w-full p-3 border rounded-lg"
+            :class="{ 'border-red-500': !isPhoneValid && phone !== '' }" />
+          <button
+            @click="checkout"
+            :disabled="!isFormValid"
+            class="py-3 px-6 w-full bg-green-500 text-white rounded-lg font-semibold hover:bg-green-600 transition-colors duration-300 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed">
+            Checkout
+          </button>
         </div>
       </div>
     </div>
 
-    <div style="display: flex; justify-content: center; align-items: center">
-      <!-- Back to Lessons Button -->
+    <!-- Back to Lessons Button -->
+    <div class="mt-6 text-center">
       <router-link
         to="/"
-        class="py-2 px-6 bg-green-500 text-white rounded-lg text-lg font-semibold hover:bg-green-600 transition-colors duration-300">
+        class="py-2 px-6 bg-blue-500 text-white rounded-lg text-lg font-semibold hover:bg-blue-600 transition-colors duration-300">
         Back to Lessons
       </router-link>
     </div>
@@ -79,40 +95,63 @@ import "vue3-toastify/dist/index.css";
 export default {
   data() {
     return {
-      cart: [],
+      cart: [], // Cart items
+      name: "", // User's name
+      phone: "", // User's phone number
     };
   },
   computed: {
     total() {
       return this.cart.reduce(
-        (sum, lesson) => sum + parseFloat(lesson.price) * lesson.quantity,
+        (sum, lesson) =>
+          sum + parseFloat(lesson.price) * (lesson.quantity || 1),
         0
       );
+    },
+    isNameValid() {
+      return /^[A-Za-z\s]+$/.test(this.name); // Name must only contain letters and spaces
+    },
+    isPhoneValid() {
+      return /^[0-9]+$/.test(this.phone); // Phone must only contain numbers
+    },
+    isFormValid() {
+      return this.isNameValid && this.isPhoneValid && this.name && this.phone;
     },
   },
   methods: {
     removeFromCart(index) {
       const lesson = this.cart[index];
       if (lesson.quantity > 1) {
-        lesson.quantity--; // Decrease quantity if more than 1
+        lesson.quantity--;
       } else {
-        this.cart.splice(index, 1); // Remove item from cart
+        this.cart.splice(index, 1);
       }
-
-      // Display notification
       toast(`${lesson.subject} removed from the cart`, {
         type: "error",
         autoClose: 2000,
       });
 
-      // Update lessons in localStorage
-      const lessons = JSON.parse(localStorage.getItem("lessons")) || [];
-      const lessonIndex = lessons.findIndex((l) => l.id === lesson.id);
-      if (lessonIndex !== -1) {
-        lessons[lessonIndex].spaces++; // Increment spaces
+      // Update localStorage
+      localStorage.setItem("cart", JSON.stringify(this.cart));
+    },
+    checkout() {
+      if (this.isFormValid) {
+        toast("Order submitted successfully!", {
+          type: "success",
+          autoClose: 3000,
+        });
+
+        // Clear the cart and form
+        this.cart = [];
+        this.name = "";
+        this.phone = "";
+        localStorage.removeItem("cart");
+      } else {
+        toast("Please fill out the form correctly.", {
+          type: "error",
+          autoClose: 3000,
+        });
       }
-      localStorage.setItem("lessons", JSON.stringify(lessons)); // Save lessons
-      localStorage.setItem("cart", JSON.stringify(this.cart)); // Save updated cart
     },
   },
   created() {
@@ -122,5 +161,5 @@ export default {
 </script>
 
 <style scoped>
-/* No custom styles here, everything is handled by Tailwind CSS */
+/* Tailwind handles most of the styling */
 </style>
