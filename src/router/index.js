@@ -1,15 +1,19 @@
-import { createRouter, createWebHashHistory } from "vue-router";
-import Home from "../views/Home.vue"; // Adjust to your file structure
-import Cart from "../views/CartPage.vue"; // Your Cart component
-
-const routes = [
-  { path: "/", component: Home },
-  { path: "/cart", component: Cart },
-];
+import { createRouter, createWebHistory } from "vue-router";
 
 const router = createRouter({
-  history: createWebHashHistory(),
-  routes,
+  history: createWebHistory(import.meta.env.BASE_URL),
+  routes: [
+    {
+      path: "/",
+      name: "lessons",
+      component: () => import("../views/Home.vue"),
+    },
+    {
+      path: "/cart",
+      name: "cart",
+      component: () => import("../views/CartPage.vue"),
+    },
+  ],
 });
 
 export default router;

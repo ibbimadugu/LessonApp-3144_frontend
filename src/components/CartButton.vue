@@ -9,7 +9,7 @@ export default {
   methods: {
     // Method to redirect to the cart page
     navigateToCart() {
-      this.$router.push("/cart"); // Replace with your actual route for the cart page
+      this.$router.push({ name: "cart" }); // Replace with your actual route for the cart page
     },
     // Method to retrieve the cart length from localStorage
     getCartLengthFromLocalStorage() {

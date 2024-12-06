@@ -106,6 +106,7 @@
 
 <script>
 import { toast } from "vue3-toastify";
+import { submitOrder } from "../services/orderService";
 import "vue3-toastify/dist/index.css";
 
 export default {
@@ -150,18 +151,38 @@ export default {
       // Update localStorage
       localStorage.setItem("cart", JSON.stringify(this.cart));
     },
-    checkout() {
+    async checkout() {
       if (this.isFormValid) {
-        toast("Order submitted successfully!", {
-          type: "success",
-          autoClose: 3000,
-        });
+        const order = {
+          name: this.name,
+          phone: this.phone,
+          items: this.cart.map((lesson) => ({
+            subject: lesson.subject,
+            location: lesson.location,
+            price: lesson.price,
+            quantity: lesson.quantity || 1,
+          })),
+        };
 
-        // Clear the cart and form
-        this.cart = [];
-        this.name = "";
-        this.phone = "";
-        localStorage.removeItem("cart");
+        try {
+          // Call submitOrder from orderService.js to send the order data
+          const response = await submitOrder(order);
+          toast("Order submitted successfully!", {
+            type: "success",
+            autoClose: 3000,
+          });
+
+          // Clear the cart and form
+          this.cart = [];
+          this.name = "";
+          this.phone = "";
+          localStorage.removeItem("cart");
+        } catch (error) {
+          toast("There was an issue with your order submission.", {
+            type: "error",
+            autoClose: 3000,
+          });
+        }
       } else {
         toast("Please fill out the form correctly.", {
           type: "error",

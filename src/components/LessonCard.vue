@@ -4,7 +4,7 @@
     <div class="lesson-image-container w-full h-48 overflow-hidden">
       <img
         v-if="lesson.image"
-        :src="lesson.image"
+        :src="'http://localhost:5000/images/' + lesson.image"
         alt="Lesson image"
         class="w-full h-full object-cover" />
     </div>
@@ -43,7 +43,10 @@ import "vue3-toastify/dist/index.css";
 export default {
   name: "LessonCard",
   props: {
-    lesson: Object,
+    lesson: {
+      type: Object,
+      required: true,
+    },
   },
   computed: {
     formattedPrice() {
@@ -53,6 +56,10 @@ export default {
         currency: "GBP",
       }).format(price);
     },
+  },
+  mounted() {
+    // Log the lesson object when the component is mounted
+    console.log("Lesson data in LessonCard:", this.lesson);
   },
   methods: {
     addToCart() {

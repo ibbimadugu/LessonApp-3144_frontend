@@ -17,6 +17,5 @@ export default defineConfig({
       plugins: [tailwindcss(), autoprefixer()],
     },
   },
-  base:
-    process.env.NODE_ENV === "production" ? "/LessonApp-3144_frontend/" : "/",
+  base: "/LessonApp-3144_frontend/",
 });
