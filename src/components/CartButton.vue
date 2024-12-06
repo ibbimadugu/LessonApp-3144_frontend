@@ -1,15 +1,9 @@
 <script>
-import {
-  getCartLength,
-  addItemToCart,
-  removeItemFromCart,
-} from "../utils/cart"; // Adjust the import path if needed
-
 export default {
   name: "CartButton",
   data() {
     return {
-      cartLength: getCartLength(), // Load cart length on component mount
+      cartLength: this.getCartLengthFromLocalStorage(), // Initialize cart length from localStorage
     };
   },
   methods: {
@@ -17,13 +11,24 @@ export default {
     navigateToCart() {
       this.$router.push("/cart"); // Replace with your actual route for the cart page
     },
-    addToCart(item) {
-      addItemToCart(item); // Add item to the cart
-      this.cartLength = getCartLength(); // Update cart length
+    // Method to retrieve the cart length from localStorage
+    getCartLengthFromLocalStorage() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      return cart.length;
     },
+    // Method to add item to the cart and update localStorage
+    addToCart(item) {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart.push(item);
+      localStorage.setItem("cart", JSON.stringify(cart));
+      this.cartLength = cart.length; // Update cart length
+    },
+    // Method to remove item from the cart and update localStorage
     removeFromCart(itemId) {
-      removeItemFromCart(itemId); // Remove item from the cart
-      this.cartLength = getCartLength(); // Update cart length
+      let cart = JSON.parse(localStorage.getItem("cart")) || [];
+      cart = cart.filter((item) => item.id !== itemId); // Remove the item by ID
+      localStorage.setItem("cart", JSON.stringify(cart));
+      this.cartLength = cart.length; // Update cart length
     },
   },
 };
@@ -38,8 +43,12 @@ export default {
         'bg-green-500 text-white': cartLength > 0,
         'bg-gray-300 text-gray-500 cursor-not-allowed': cartLength === 0,
       }"
-      class="view-cart-button py-2 my-20 px-8 rounded-lg">
+      class="py-2 px-8 rounded-lg transition-colors duration-300 ease-in-out">
       View Cart
     </button>
   </div>
 </template>
+
+<style scoped>
+/* Custom styling if needed */
+</style>

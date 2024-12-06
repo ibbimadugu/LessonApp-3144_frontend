@@ -37,6 +37,9 @@
 </template>
 
 <script>
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+
 export default {
   name: "LessonCard",
   props: {
@@ -54,16 +57,16 @@ export default {
   methods: {
     addToCart() {
       if (this.lesson.spaces > 0) {
-        this.lesson.spaces--; // Decrease space count
+        this.lesson.spaces--;
         const cart = JSON.parse(localStorage.getItem("cart")) || [];
-        // Add a new instance of the lesson to the cart as a unique item
         cart.push({ ...this.lesson, quantity: 1 });
-
-        // Update local storage
         localStorage.setItem("cart", JSON.stringify(cart));
-
-        // Emit the cart update to the parent component (to keep state in sync)
-        this.$emit("update-cart"); // Emit the event to notify the parent component
+        this.$emit("update-cart");
+        // Display notification
+        toast(`${this.lesson.subject} added to the cart!`, {
+          type: "success", // Success notification
+          autoClose: 2000, // Duration of toast
+        });
       }
     },
   },

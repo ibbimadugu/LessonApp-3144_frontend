@@ -1702,6 +1702,7 @@ __metadata:
     vite: "npm:^5.4.10"
     vue: "npm:^3.5.12"
     vue-router: "npm:4.0.13"
+    vue3-toastify: "npm:^0.2.5"
   languageName: unknown
   linkType: soft
 
@@ -2634,6 +2635,18 @@ __metadata:
   peerDependencies:
     vue: ^3.2.0
   checksum: 10c0/23004fccfcbcccacedc3fac68902a31a510ef9177f2f93602a6d51d42642c876225726f877ad261184f41f9e2f8dc3066062254b1852e01335a06bd035aab0d9
+  languageName: node
+  linkType: hard
+
+"vue3-toastify@npm:^0.2.5":
+  version: 0.2.5
+  resolution: "vue3-toastify@npm:0.2.5"
+  peerDependencies:
+    vue: ">=3.2.0"
+  peerDependenciesMeta:
+    vue:
+      optional: true
+  checksum: 10c0/c8fe7b2243f0f50193197a0bcc7343cbbfaf7ab24c6910856a356b8c24e4e1db2af0535b26efb43ca3dcc04445c5b27cd8fa1eefafb59fcde83004a64dbb2200
   languageName: node
   linkType: hard
 
