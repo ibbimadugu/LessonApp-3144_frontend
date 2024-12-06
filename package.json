@@ -10,6 +10,7 @@
     "build:tailwind": "tailwindcss -i ./src/assets/main.css -o ./src/assets/output.css --watch",
     "build:css": "yarn dlx tailwindcss -i ./src/assets/main.css -o ./src/assets/output.css --watch",
     "tailwind-watch": "yarn dlx tailwindcss -i ./src/assets/main.css -o ./src/assets/output.css --watch",
+    "predeploy": "yarn build",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
