@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "../views/Home.vue"; // Adjust to your file structure
 import Cart from "../views/CartPage.vue"; // Your Cart component
 
@@ -8,7 +8,7 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory("/"),
+  history: createWebHashHistory(),
   routes,
 });
 
