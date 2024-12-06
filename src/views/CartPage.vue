@@ -97,7 +97,7 @@
     <div class="mt-6 text-center">
       <router-link
         to="/"
-        class="py-2 px-6 bg-blue-500 text-white rounded-lg text-lg font-semibold hover:bg-blue-600 transition-colors duration-300">
+        class="py-2 px-6 bg-green-500 text-white rounded-lg text-lg font-semibold hover:bg-green-600 transition-colors duration-300">
         Back to Lessons
       </router-link>
     </div>

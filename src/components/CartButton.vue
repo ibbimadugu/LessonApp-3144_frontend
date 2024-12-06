@@ -43,7 +43,7 @@ export default {
         'bg-green-500 text-white': cartLength > 0,
         'bg-gray-300 text-gray-500 cursor-not-allowed': cartLength === 0,
       }"
-      class="py-2 px-8 rounded-lg transition-colors duration-300 ease-in-out">
+      class="py-2 mt-4 px-8 rounded-lg transition-colors duration-300 ease-in-out">
       View Cart
     </button>
   </div>

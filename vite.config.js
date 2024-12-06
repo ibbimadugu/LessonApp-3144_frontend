@@ -18,5 +18,5 @@ export default defineConfig({
       plugins: [tailwindcss(), autoprefixer()],
     },
   },
-  base: "/",
+  base: "/LessonApp-3144_frontend/",
 });
