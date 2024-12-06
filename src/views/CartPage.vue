@@ -55,18 +55,34 @@
 
         <!-- Checkout Form -->
         <div class="checkout-form space-y-4">
-          <input
-            v-model="name"
-            type="text"
-            placeholder="Enter your name"
-            class="w-full p-3 border rounded-lg"
-            :class="{ 'border-red-500': !isNameValid && name !== '' }" />
-          <input
-            v-model="phone"
-            type="text"
-            placeholder="Enter your phone"
-            class="w-full p-3 border rounded-lg"
-            :class="{ 'border-red-500': !isPhoneValid && phone !== '' }" />
+          <div>
+            <input
+              v-model="name"
+              type="text"
+              placeholder="Enter your name"
+              class="w-full p-3 border rounded-lg"
+              :class="{ 'border-red-500': !isNameValid && name !== '' }" />
+            <p
+              v-if="!isNameValid && name !== ''"
+              class="text-red-500 text-sm mt-1">
+              Enter a valid name.
+            </p>
+          </div>
+
+          <div>
+            <input
+              v-model="phone"
+              type="text"
+              placeholder="Enter your phone"
+              class="w-full p-3 border rounded-lg"
+              :class="{ 'border-red-500': !isPhoneValid && phone !== '' }" />
+            <p
+              v-if="!isPhoneValid && phone !== ''"
+              class="text-red-500 text-sm mt-1">
+              Enter a valid phone number.
+            </p>
+          </div>
+
           <button
             @click="checkout"
             :disabled="!isFormValid"
@@ -95,9 +111,9 @@ import "vue3-toastify/dist/index.css";
 export default {
   data() {
     return {
-      cart: [], // Cart items
-      name: "", // User's name
-      phone: "", // User's phone number
+      cart: [],
+      name: "",
+      phone: "",
     };
   },
   computed: {
@@ -109,10 +125,10 @@ export default {
       );
     },
     isNameValid() {
-      return /^[A-Za-z\s]+$/.test(this.name); // Name must only contain letters and spaces
+      return /^[A-Za-z\s]+$/.test(this.name);
     },
     isPhoneValid() {
-      return /^[0-9]+$/.test(this.phone); // Phone must only contain numbers
+      return /^[0-9]+$/.test(this.phone);
     },
     isFormValid() {
       return this.isNameValid && this.isPhoneValid && this.name && this.phone;
