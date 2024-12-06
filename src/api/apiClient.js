@@ -1,32 +1,36 @@
 // apiClient.js
 const apiClient = {
-  baseURL: "http://localhost:5000", // Your base API URL
+  baseURL:
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:5000" // Localhost for development
+      : "https://your-production-url.com", // Production URL
+
   headers: {
-    "Content-Type": "application/json", // Ensures that your request body is treated as JSON
+    "Content-Type": "application/json",
   },
 
   // Generic request method that supports GET, POST, etc.
   async request(method, url, data = null) {
     const options = {
-      method: method, // The HTTP method (GET, POST, etc.)
-      headers: this.headers, // Request headers
+      method: method,
+      headers: this.headers,
     };
 
     if (data) {
-      options.body = JSON.stringify(data); // If data is provided, stringify it and attach to the body
+      options.body = JSON.stringify(data);
     }
 
     try {
-      const response = await fetch(`${this.baseURL}${url}`, options); // Send the request
+      const response = await fetch(`${this.baseURL}${url}`, options);
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`); // Handle non-200 status codes
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      return await response.json(); // Parse and return JSON response
+      return await response.json();
     } catch (error) {
       console.error("API error:", error);
-      throw error; // Throw the error to be caught in the calling code
+      throw error;
     }
   },
 
@@ -37,7 +41,7 @@ const apiClient = {
 
   // POST method
   async post(url, data) {
-    return this.request("POST", url, data); // Calls the request method with POST and the data
+    return this.request("POST", url, data);
   },
 };
 
