@@ -2,14 +2,12 @@
   <div
     class="lesson-card border rounded-lg shadow-lg bg-white transition-transform transform hover:scale-105 hover:shadow-xl">
     <div class="lesson-image-container w-full h-48 overflow-hidden">
-      <!-- Display lesson image if available, otherwise fallback to default image -->
+      <!-- Display lesson image -->
       <img
-        v-if="lessonImage"
-        :src="lessonImage"
-        alt="Lesson image"
-        class="w-full h-full object-cover" />
-      <img v-else src="../assets/defaultimg.png" <!-- Fallback image -- />
-      alt="Default Lesson image" class="w-full h-full object-cover" />
+        :src="`https://lessonsapp-backend.onrender.com${lesson.image}`"
+        @error="setDefaultImage"
+        alt="Lesson Image"
+        class="w-full h-40 object-cover mb-4" />
     </div>
 
     <div class="p-4">
@@ -40,22 +38,9 @@
 </template>
 
 <script>
-import art from "../assets/art.jpg";
-import biology from "../assets/biology.jpg";
-import chemistry from "../assets/chemistry.jpg";
-import computer from "../assets/computer.jpg";
-import economics from "../assets/economics.jpg";
-import engineering from "../assets/engineering.jpg";
-import english from "../assets/english.jpg";
-import french from "../assets/french.jpg";
-import geography from "../assets/geography.jpg";
-import history from "../assets/history.jpg";
-import law from "../assets/law.jpg";
-import mathematics from "../assets/mathematics.jpg";
-import music from "../assets/music.jpg";
-import philosophy from "../assets/philosophy.jpg";
-import physics from "../assets/physics.jpg";
-import psychology from "../assets/psychology.jpg";
+import { toast } from "vue3-toastify";
+import "vue3-toastify/dist/index.css";
+
 import defaultImage from "../assets/defaultimg.png";
 
 export default {
@@ -67,29 +52,6 @@ export default {
     },
   },
   computed: {
-    // Dynamically return the correct image based on the lesson subject
-    lessonImage() {
-      const images = {
-        "art history": art,
-        biology,
-        chemistry,
-        "computer science": computer,
-        economics,
-        engineering,
-        "english literature": english,
-        french,
-        geography,
-        history,
-        law,
-        math: mathematics,
-        philosophy,
-        physics,
-        psychology,
-        "music theory": music,
-      };
-
-      return images[this.lesson.subject.toLowerCase()] || defaultImage;
-    },
     formattedPrice() {
       const price = parseFloat(this.lesson.price.replace(/[^0-9.-]+/g, ""));
       return new Intl.NumberFormat("en-GB", {
@@ -106,12 +68,14 @@ export default {
         cart.push({ ...this.lesson, quantity: 1 });
         localStorage.setItem("cart", JSON.stringify(cart));
         this.$emit("update-cart");
-        // Display notification
         toast(`${this.lesson.subject} added to the cart!`, {
-          type: "success", // Success notification
-          autoClose: 2000, // Duration of toast
+          type: "success",
+          autoClose: 2000,
         });
       }
+    },
+    setDefaultImage(event) {
+      event.target.src = defaultImage; // Fallback to default image
     },
   },
 };

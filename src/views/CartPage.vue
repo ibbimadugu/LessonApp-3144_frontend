@@ -40,7 +40,7 @@
         <!-- Remove Button -->
         <div class="flex items-center space-x-4">
           <button
-            @click="removeFromCart(index)"
+            @click="removeFromCart(index, lesson)"
             class="text-sm font-semibold bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-colors duration-300">
             Remove
           </button>
@@ -105,6 +105,9 @@
 </template>
 
 <script>
+import { toast } from "vue3-toastify"; // Importing toast
+import "vue3-toastify/dist/index.css"; // Import the styles for the toast notifications
+
 import art from "../assets/art.jpg";
 import biology from "../assets/biology.jpg";
 import chemistry from "../assets/chemistry.jpg";
@@ -149,13 +152,19 @@ export default {
     },
   },
   methods: {
-    removeFromCart(index) {
-      const lesson = this.cart[index];
+    removeFromCart(index, lesson) {
       if (lesson.quantity > 1) {
         lesson.quantity--;
       } else {
         this.cart.splice(index, 1);
       }
+
+      // Display a toast notification when an item is removed from the cart
+      toast(`${lesson.subject} has been removed from your cart.`, {
+        type: "error", // Error toast to indicate removal
+        autoClose: 2000, // Duration of toast
+      });
+
       // Update localStorage
       localStorage.setItem("cart", JSON.stringify(this.cart));
     },
@@ -244,5 +253,5 @@ export default {
 </script>
 
 <style scoped>
-/* Tailwind handles most of the styling */
+/* ... */
 </style>
