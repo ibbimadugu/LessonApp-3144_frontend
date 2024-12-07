@@ -19,7 +19,7 @@
             class="lesson-image-container w-24 h-24 overflow-hidden mr-6 rounded-lg">
             <img
               v-if="lesson.image"
-              :src="getLessonImage(lesson.subject)"
+              :src="`https://lessonsapp-backend.onrender.com${lesson.image}`"
               alt="Lesson image"
               class="w-full h-full object-cover" />
           </div>
@@ -105,25 +105,10 @@
 </template>
 
 <script>
-import { toast } from "vue3-toastify"; // Importing toast
-import "vue3-toastify/dist/index.css"; // Import the styles for the toast notifications
-
-import art from "../assets/art.jpg";
-import biology from "../assets/biology.jpg";
-import chemistry from "../assets/chemistry.jpg";
-import computer from "../assets/computer.jpg";
-import economics from "../assets/economics.jpg";
-import engineering from "../assets/engineering.jpg";
-import english from "../assets/english.jpg";
-import french from "../assets/french.jpg";
-import geography from "../assets/geography.jpg";
-import history from "../assets/history.jpg";
-import law from "../assets/law.jpg";
-import music from "../assets/music.jpg"; // Add missing images for all subjects
-import mathematics from "../assets/mathematics.jpg"; // Add missing images for all subjects
-import philosophy from "../assets/philosophy.jpg"; // Add missing images for all subjects
-import physics from "../assets/physics.jpg"; // Add missing images for all subjects
-import psychology from "../assets/psychology.jpg"; // Add missing images for all subjects
+// Import the necessary function
+import { toast } from "vue3-toastify";
+import { submitOrder } from "../services/orderService"; // Import submitOrder from orderService
+import "vue3-toastify/dist/index.css";
 
 export default {
   data() {
@@ -161,8 +146,8 @@ export default {
 
       // Display a toast notification when an item is removed from the cart
       toast(`${lesson.subject} has been removed from your cart.`, {
-        type: "error", // Error toast to indicate removal
-        autoClose: 2000, // Duration of toast
+        type: "error",
+        autoClose: 2000,
       });
 
       // Update localStorage
@@ -173,27 +158,23 @@ export default {
         const order = {
           name: this.name,
           phone: this.phone,
-          items: this.cart.map((lesson) => ({
-            subject: lesson.subject,
-            location: lesson.location,
-            price: lesson.price,
-            quantity: lesson.quantity || 1,
-          })),
+          lessonIDs: this.cart.map((lesson) => lesson._id),
+          spaces: this.cart.reduce(
+            (sum, lesson) => sum + (lesson.quantity || 1),
+            0
+          ),
         };
+
         try {
-          // Call submitOrder from orderService.js to send the order data
-          // Assuming orderService.js exists and handles the API calls
           const response = await submitOrder(order);
           toast("Order submitted successfully!", {
             type: "success",
             autoClose: 3000,
           });
-
-          // Clear the cart and form
           this.cart = [];
           this.name = "";
           this.phone = "";
-          localStorage.removeItem("cart");
+          localStorage.removeItem("cart"); // Clear cart from localStorage
         } catch (error) {
           toast("There was an issue with your order submission.", {
             type: "error",
@@ -207,51 +188,18 @@ export default {
         });
       }
     },
-    getLessonImage(subject) {
-      switch (subject.toLowerCase()) {
-        case "art history":
-          return art;
-        case "biology":
-          return biology;
-        case "chemistry":
-          return chemistry;
-        case "computer science":
-          return computer;
-        case "economics":
-          return economics;
-        case "engineering":
-          return engineering;
-        case "english literature":
-          return english;
-        case "french":
-          return french;
-        case "geography":
-          return geography;
-        case "history":
-          return history;
-        case "law":
-          return law;
-        case "math":
-          return mathematics;
-        case "music theory":
-          return music;
-        case "philosophy":
-          return philosophy;
-        case "physics":
-          return physics;
-        case "psychology":
-          return psychology;
-        default:
-          return "";
-      }
-    },
   },
   created() {
     this.cart = JSON.parse(localStorage.getItem("cart")) || [];
+    this.cart.forEach((lesson) => {
+      if (!lesson.quantity) {
+        lesson.quantity = 1;
+      }
+    });
   },
 };
 </script>
 
 <style scoped>
-/* ... */
+/* Add styles as needed */
 </style>

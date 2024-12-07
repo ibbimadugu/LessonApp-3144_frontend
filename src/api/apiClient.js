@@ -1,9 +1,9 @@
 // apiClient.js
 const apiClient = {
   baseURL:
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:5000"
-      : "https://lessonapp-3144-backend.onrender.com",
+    process.env.NODE_ENV === "production"
+      ? "https://lessonapp-3144-backend.onrender.com"
+      : "http://localhost:5000", // Local development server URL
 
   headers: {
     "Content-Type": "application/json",
